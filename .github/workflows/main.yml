@@ -19,7 +19,7 @@ jobs:
       env:
         BUILD_ONLY: true
         PAGES_BRANCH: gh-pages
-        TOKEN: $GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}
+        TOKEN: $GITHUB_ACTOR:${{ secrets.TOKEN }}
 
     - name: Deploy 🚀
       uses: JamesIves/github-pages-deploy-action@v4.2.5
