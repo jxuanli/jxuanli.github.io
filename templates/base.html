@@ -11,24 +11,25 @@
   <link rel="stylesheet" href={% block csssetup%} "{{ config.base_url ~ "/base.css" }}" {% endblock csssetup%}>
 </head>
 
-<body>
-  <header class="column post">
-    <nav class="container">
-      <ul class="nav__links">
-        <li>
-          <a class="mainA" href="/">
-            Home
-          </a>
-        </li>
-        <li>
-          <a class="subA" href="#">
-            Blog Posts
-          </a>
-        </li>
-      </ul>
-    </nav>
-  </header>
-</body>
+<headerbar></headerbar>
+
+
+<header class="column post">
+  <nav class="container">
+    <ul class="nav__links">
+      <li>
+        <a class="mainA" href="/">
+          Home
+        </a>
+      </li>
+      <li>
+        <a class="subA" href="/blog">
+          Blog Posts
+        </a>
+      </li>
+    </ul>
+  </nav>
+</header>
 
 {% block content %} {% endblock %}
 

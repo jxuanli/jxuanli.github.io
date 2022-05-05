@@ -5,12 +5,18 @@ Blog
 {% endblock title %}
 
 {% block content %}
-<h1 class="title">
-  {{ section.title }}
-</h1>
-<ul>
-  {% for page in section.pages %}
-  <li><a href="{{ page.permalink | safe }}">{{ page.title }}</a></li>
-  {% endfor %}
-</ul>
+<section class="web__body">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+        {{ section.title }}
+      </h1>
+      <ul>
+        {% for page in section.pages %}
+        <li><a href="{{ page.permalink | safe }}">{{ page.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</section>
 {% endblock content %}
