@@ -11,6 +11,7 @@ Blog
       <h1 class="title">
         {{ section.title }}
       </h1>
+    <hr>
       <ul>
         {% for page in section.pages %}
         <li><a href="{{ page.permalink | safe }}">{{ page.title }}</a></li>
