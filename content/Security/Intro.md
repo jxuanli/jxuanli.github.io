@@ -1,6 +1,7 @@
 +++
 title = "My motivation and some initial thoughts"
 date = 2022-05-12
+highlight_theme = "base16-ocean-dark"
 +++
 
 After YEARS of procrastination, I have finally decided to sit down and formally study security. 
@@ -11,11 +12,15 @@ I plan to study the basics in under 20 days.
 
 I initially choose Kali and VirtualBox to be my companions of this journey. To install Kali, I use Chocolatey. Again, I would rather prefer not to install from a website that I have not seen before. Many tools are available for download in Chocolatey and it is generally safer. Also, just to note. For people who do not know what they are installing in detail, I would recommend to use Chocolatey as it drastically simplifies the process. With one command, your environment is set up. Run the command:
 
+```cmd
 choco install wsl-kalilinux
+```
 
 As a side note, you can search if the tools you want to install are available in choco by running the command:
 
+```cmd
 choco search kali 
+```
 
 I decided to use Docker instead of VirtualBox upon further search. Docker has already been installed on my device but choco supports it.
 
