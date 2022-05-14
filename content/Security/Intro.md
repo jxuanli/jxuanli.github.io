@@ -38,4 +38,3 @@ To download Docker Compose:
 root@localhost:~# sudo curl -sSL https://get.docker.com/ | sh
 ```
 
-Then check if 
