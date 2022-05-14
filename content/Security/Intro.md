@@ -1,6 +1,6 @@
 +++
 title = "My motivation and some initial thoughts"
-date = 2022-05-12
+date = 2022-05-13
 +++
 
 After YEARS of procrastination, I have finally decided to sit down and formally study security.
@@ -38,3 +38,14 @@ To download Docker Compose:
 root@localhost:~# sudo curl -sSL https://get.docker.com/ | sh
 ```
 
+Remember to change Docker Run Config Override (JSON) for Kali Linux in Kasm to
+```JSON
+{"user":"root"}
+```
+
+The root is the system administrator. 
+
+To switch to `root`, run the command in Kali's terminal below
+```cmd
+default:~$ su -
+```
