@@ -15,27 +15,27 @@ I plan to study the basics in under 20 days.
 
 
 
-I initially choose Kali and VirtualBox to be my companions on this journey. To install Kali, I use Chocolatey. Again, I would rather prefer not to install from a website that I have not seen before. Many tools are available for download in Chocolatey and it is generally safer. Also, just to note. For people who do not know what they are installing in detail, I would recommend using Chocolatey as it drastically simplifies the process. With one command, your environment is set up. Run the command:
+I initially choose Kali and VirtualBox to be my companions on this journey.  However, I decided to use Kasm instead of VirtualBox upon further search. It incurs a small cost but it also comes with some perks such as automatic privacy and the simplification of management. 
 
-
-
+To setup Kasm: follow the tutorial here by NetworkChuck, https://www.youtube.com/watch?v=U7e-mcJdZok&t=444s&ab_channel=NetworkChuck. He did not post the commands in the video description so I will do it here. After loging in, run the following commands to setup the Linux swap partition:
 ```cmd
-choco install wsl-kalilinux
+root@localhost:~# sudo dd if=/dev/zero bs=1M count=1024 of=/mnt/1GiB.swap
+root@localhost:~# sudo chmod 600 /mnt/1GiB.swap
+root@localhost:~# sudo mkswap /mnt/1GiB.swap
+root@localhost:~# sudo swapon /mnt/1GiB.swap
+root@localhost:~# echo '/mnt/1GiB.swap swap swap defaults 0 0' | sudo tee -a /etc/fstab
 ```
 
-
-
-As a side note, you can search if the tools you want to install are available in choco by running the command:
-
-
-
+To install Kasm
 ```cmd
-choco search kali 
+root@localhost:~# wget https://kasm-static-content.s3.amazonaws.com/kasm_release_1.10.0.238225.tar.g
+root@localhost:~# tar -xf kasm_release*.tar.gz
+root@localhost:~# sudo bash kasm_release/install.sh
 ```
 
+To download Docker Compose:
+```cmd
+root@localhost:~# sudo curl -sSL https://get.docker.com/ | sh
+```
 
-
-I decided to use Docker instead of VirtualBox upon further search. Docker has already been installed on my device but choco supports it.
-
-
-
+Then check if 
