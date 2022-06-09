@@ -1,24 +1,24 @@
+{% extends 'base.html' %}
 
-{% extends "base.html" %}
-{% block title %} 404 {% endblock title %}
+
 {% block content %}
-<section class="web__body">
-  <div style="margin-top: 40px; font-size: 40px; text-align: center;">
-
-      <br>
-    
-      <div style="font-weight: bold;">
-        <p class="title"> 404 </p>
-      </div>
-      <p class="subtitle">The requested page was not found</p>
-    
-      <br>
-      <br>
-    
-      <div class="subtitle" style="margin-bottom: 300px; font-size: 24px">
-        <a class="normal__link" href="/">Click here</a> to go back to the homepage.
-      </div>
-    
+<section class="section">
+  <div class="container">
+    <div class="has-text-centered" style="text-align: center">
+      <h1 class="title is-2">404</h1>
+      <p class="subtitle is-4">
+        The requested page was not found
+      </p>
+      {{ macros:: social_links( social_config=config.extra.social) }}
+      <p class="my-6">
+        <a href='{{ config.base_url }}'>
+          <span class="icon">
+            <i class="fas fa-home"></i>
+          </span>
+          <span>Home</span>
+        </a>
+      </p>
     </div>
-  </section> 
-{% endblock content %}
+  </div>
+</section>
+{% endblock %}
