@@ -63,10 +63,10 @@ galleria.enabled = true
 
 navbar_items = [
     { code = "en", nav_items = [
-        { url = "$BASE_URL/Projects", name = "Projects" },
-        { url = "$BASE_URL/Rust", name = "Rust" },
-        { url = "$BASE_URL/Security", name = "Security" },
-        { url = "$BASE_URL/About", name = "About" },
+        { url = "$BASE_URL/projects", name = "Projects" },
+        { url = "$BASE_URL/rust", name = "Rust" },
+        { url = "$BASE_URL/security", name = "Security" },
+        { url = "$BASE_URL/about", name = "About" },
         { url = "$BASE_URL/tags", name = "Tags" },
     ] },
 ]
