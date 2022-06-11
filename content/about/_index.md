@@ -1,6 +1,5 @@
 +++
 title = "About me"
-description = "About me"
 paginate_by = 5
 +++
 

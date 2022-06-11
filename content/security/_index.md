@@ -1,6 +1,6 @@
 +++
 title = "Security"
-description = "Security"
+description = "My journey with Security"
 sort_by = "date"
 paginate_by = 5
 +++

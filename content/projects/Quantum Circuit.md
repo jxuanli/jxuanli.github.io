@@ -253,18 +253,18 @@ Call the three functions and visualize the results. (NOTE: do not run those on J
 change_Ntrain()
 ```
 
-![1.png](https://jxuali.github.io/contents/projects/pics/svm/svm1.png)
+![1.png](https://github.com/jxuanli/jxuanli.github.io/blob/main/content/projects/pics/svm/svm1.png)
 
 ```python
 change_N()
 ```
 
-![2.png](https://jxuali.github.io/contents/projects/pics/svm/svm2.png)
+![2.png](https://github.com/jxuanli/jxuanli.github.io/blob/main/content/projects/pics/svm/svm2.png)
 
 ```python
 change_DEPTH()
 ```
 
-![3.png](https://jxuali.github.io/contents/projects/pics/svm/svm3.png)
+![3.png](https://github.com/jxuanli/jxuanli.github.io/blob/main/content/projects/pics/svm/svm3.png)
 
 [1] Evan Peters, João Caldeira, Alan Ho, Stefan Leichenauer, Masoud Mohseni, Hartmut Neven, Panagiotis Spentzouris, Doug Strain, and Gabriel N. Perdue, Machine learning of high dimensional data on a noisy quantum processor (2021), arXiv: https://arxiv.org/abs/2101.09581
