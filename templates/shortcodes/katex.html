@@ -1,1 +1,15 @@
 <script type="math/tex{% if block %};mode=display{% endif %}">{{body}}</script>
+<script>
+    try {
+        var html = katex.renderToString(texString);
+        // '<span class="katex">...</span>'
+    } catch (e) {
+        if (e instanceof katex.ParseError) {
+            // KaTeX can't parse the expression
+            html = ("Error in LaTeX '" + texString + "': " + e.message)
+                .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        } else {
+            throw e;  // other error
+        }
+    }
+</script>
