@@ -12,14 +12,14 @@
       <p class="subtitle is-4">
         The requested page was not found.
       </p>
-      {{ macros:: social_links( social_config=config.extra.social) }}
+      <a href='{{ config.base_url }}'>
+        <span class="icon">
+          <i class="fas fa-home"></i>
+        </span>
+        <span>Home</span>
+      </a>
       <p class="my-6">
-        <a href='{{ config.base_url }}'>
-          <span class="icon">
-            <i class="fas fa-home"></i>
-          </span>
-          <span>Home</span>
-        </a>
+        {{ macros:: social_links( social_config=config.extra.social) }}
       </p>
     </div>
   </div>
