@@ -72,13 +72,14 @@
 </head>
 
 <body class="has-background-white">
-  <nav aria-label="section navigation" class="navbar is-light" role="navigation">
+  <nav aria-label="section navigation" class="navbar is-light" role="navigation" style="position: fixed; width: 100%;">
     <div class="container">
       <div class="navbar-brand">
         <a class="navbar-item is-size-5 has-text-weight-bold" href="{{config.base_url}}">
           <span class="icon">
             <i class="fas fa-home"></i>
           </span>
+          <span style="display:inline-block; width: 1rem;"></span>
           <span>Home</span>
         </a>
         <!-- {{ config.title }} -->
@@ -113,11 +114,13 @@
       </div>
     </div>
   </nav>
+  
+  <div style="padding-top: 20px"></div>
 
   {% block header %}
   {% endblock %}
 
-  {% block content %}
+  {% block content %} 
   {% endblock %}
 
   {% block search %}
