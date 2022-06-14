@@ -16,14 +16,18 @@ body
     flex-direction: column;
     min-height: 100vh;
 
-
-body[theme="dark"]
-    filter: invert(1) hue-rotate(180deg);
-
-
 section
+    background-color: white;
     flex: 1;
 
+section[theme="dark"]
+    filter: invert(1) hue-rotate(180deg);
+
+nav[theme="dark"]
+    filter: invert(1) hue-rotate(180deg);
+
+footer[theme="dark"]
+    filter: invert(1) hue-rotate(180deg);
 
 img[theme="dark"],
 picture[theme="dark"],
