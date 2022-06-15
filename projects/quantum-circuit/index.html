@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <meta content="#ffffff" name="theme-color" />
+  <meta content="#da532c" name="msapplication-TileColor" />
+
+  
+  <link href='&#x2F;icons&#x2F;favicon.ico' rel="manifest" />
+  
+  
+  <link color="#5bbad5" href='&#x2F;icons&#x2F;favicon.ico' rel="mask-icon" />
+  
+  
+  <link href='&#x2F;icons&#x2F;favicon.ico' rel="icon" sizes="16x16" type="image/png" />
+  
+  
+  <link href='&#x2F;icons&#x2F;favicon.ico' rel="icon" sizes="32x32" type="image/png" />
+  
+  
+  <link href='&#x2F;icons&#x2F;favicon.ico' rel="apple-touch-icon" sizes="180x180" />
+  
+
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/galleria@1.6.1/dist/themes/folio/galleria.folio.min.css" integrity="sha384-+rY0QD+LRnTOquDMzGa9lXU6jIwdiQuwCJQ2cdcW0qeP/0UbjQCZlXnRsUMA+9pH" crossorigin="anonymous">
+  
+
+  
+  <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css" integrity="sha384-oGm59HWAkwO32h2w8u0B98wKBZJwd6MbWtAJwQKCTffZjOXHXrnyv9Syjovgc+UV" crossorigin="anonymous">
+  
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1.9.1/css/academicons.min.css" integrity="sha384-FIue+PI4SsI9XfHCz8dBLg33b0c1fMJgNU3X//L26FYbGnlSEfWmNT7zgWc2N9b6" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" integrity="sha256-rTpdO0HXBCNpreAHcu6tB2Ppg515Vo+5GtYSsnNLz+8=" crossorigin="anonymous">
+  <link href="https://jxuanli.github.io/deep-thought.css" rel="stylesheet" />
+  
+  
+
+  <title>
+    
+Ken Li | Quantum SVM for Supernova Classification
+
+  </title>
+
+  
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-176984489-2"></script>
+  <script type="text/javascript">
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", "UA-176984489-2");
+  </script>
+  
+  
+
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css" integrity="sha384-R4558gYOUz8mP9YWpZJjofhk+zx0AS11p36HnD2ZKj/6JR5z27gSSULCNHIRReVs" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js" integrity="sha384-z1fJDqw8ZApjGO3/unPWUPsIymfsJmyrDVWC8Tv/a1HeOtGmkwNd/7xUS0Xcnvsx" crossorigin="anonymous"></script>
+
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/mathtex-script-type.min.js" integrity="sha384-jiBVvJ8NGGj5n7kJaiWwWp9AjC+Yh8rhZY3GtAX8yU28azcLgoRo4oukO87g7zDT" crossorigin="anonymous"></script>
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/auto-render.min.js" integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR" crossorigin="anonymous"></script>
+  
+  
+</head>
+
+<body class="has-background-white">
+  <nav aria-label="section navigation" class="navbar is-light" role="navigation" style="position: fixed; width: 100%;">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item is-size-5 has-text-weight-bold" href="https:&#x2F;&#x2F;jxuanli.github.io">
+          <span class="icon">
+            <i class="fas fa-home"></i>
+          </span>
+          <span style="display:inline-block; width: 1rem;"></span>
+          <span>Home</span>
+        </a>
+        <!-- Ken Li -->
+        <a aria-expanded="false" aria-label="menu" class="navbar-burger burger" data-target="navMenu" role="button">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div class="navbar-menu" id="navMenu">
+        <div class="navbar-end has-text-centered">
+          
+          
+          
+          <a class="navbar-item has-text-weight-semibold" href="https:&#x2F;&#x2F;jxuanli.github.io&#x2F;projects">
+            Projects
+          </a>
+          
+          <a class="navbar-item has-text-weight-semibold" href="https:&#x2F;&#x2F;jxuanli.github.io&#x2F;rust">
+            Rust
+          </a>
+          
+          <a class="navbar-item has-text-weight-semibold" href="https:&#x2F;&#x2F;jxuanli.github.io&#x2F;security">
+            Security
+          </a>
+          
+          <a class="navbar-item has-text-weight-semibold" href="https:&#x2F;&#x2F;jxuanli.github.io&#x2F;tags">
+            Tags
+          </a>
+          
+          
+          
+          <a class="navbar-item" id="nav-search" title="Search" data-target="#search-modal">
+            <span class="icon">
+              <i class="fas fa-search"></i>
+            </span>
+          </a>
+          <a class="navbar-item" id="dark-mode" title="Switch to dark theme">
+            <span class="icon">
+              <i class="fas fa-adjust"></i>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+  <div style="padding-top: 20px"></div>
+
+  
+  
+
+  
+<section class="section">
+  <div class="container">
+    <div class="columns">
+      <div class="column is-8 is-offset-2">
+        <article class="box">
+          <h1 class="title">
+            Quantum SVM for Supernova Classification
+          </h1>
+          <p class="subtitle"></p>
+          <div class="columns is-multiline is-gapless">
+            <div class="column is-8">
+              
+<span class="icon-text has-text-grey">
+  <!-- <span class="icon">
+    <i class="fas fa-user"></i>
+  </span>
+  <span>Ken Li published on</span> -->
+  
+  <span>Last updated on</span>
+  <span class="icon">
+    <i class="far fa-calendar-alt"></i>
+  </span>
+  <span><time datetime="2022-06-10">June 10, 2022</time></span>
+</span>
+
+            </div>
+            <div class="column is-4 has-text-right-desktop">
+              
+<span class="icon-text has-text-grey">
+  <span class="icon">
+    <i class="far fa-clock"></i>
+  </span>
+  <span>8 min,</span>
+  <span class="icon">
+    <i class="fas fa-pencil-alt"></i>
+  </span>
+  <span>1520 words</span>
+</span>
+
+            </div>
+            <div class="column">
+              
+            </div>
+            <div class="column has-text-right-desktop">
+              
+              
+<p>
+  Tags:
+  
+  <a class="has-text-info-dark has-text-weight-semibold" href="https://jxuanli.github.io/tags/python/">
+    <span class="icon-text">
+      <span class="icon">
+        <i class="fas fa-tag"></i>
+      </span>
+      <span>Python</span>
+    </span>
+  </a>
+  
+  <a class="has-text-info-dark has-text-weight-semibold" href="https://jxuanli.github.io/tags/quantum-computing/">
+    <span class="icon-text">
+      <span class="icon">
+        <i class="fas fa-tag"></i>
+      </span>
+      <span>Quantum computing</span>
+    </span>
+  </a>
+  
+  <a class="has-text-info-dark has-text-weight-semibold" href="https://jxuanli.github.io/tags/ml/">
+    <span class="icon-text">
+      <span class="icon">
+        <i class="fas fa-tag"></i>
+      </span>
+      <span>ML</span>
+    </span>
+  </a>
+  
+</p>
+
+              
+            </div>
+          </div>
+          <div class="content mt-2">
+            <p>I thank Peters, et al.(2021) for their work [1].</p>
+<p>April 2022</p>
+<h3 id="imports">Imports</h3>
+<p>import numpy as np
+import paddle
+from paddle_quantum.circuit import UAnsatz
+from sklearn import svm
+from typing import NamedTuple
+from matplotlib import pyplot as plt
+import time
+import warnings</p>
+<h3 id="set-up">Set-up</h3>
+<p>Fixing random state for reproducibility and suppress warnings</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#6c7079;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#abb2bf;">np.random.</span><span style="color:#eb6772;">seed</span><span style="color:#abb2bf;">(</span><span style="color:#db9d63;">999</span><span style="color:#abb2bf;">)
+</span><span style="color:#abb2bf;">warnings.</span><span style="color:#eb6772;">filterwarnings</span><span style="color:#abb2bf;">(</span><span style="color:#9acc76;">&#39;ignore&#39;</span><span style="color:#abb2bf;">)
+</span></code></pre>
+<p>Define a struct to encapsulate necessary circuit information such as the number of qubits, the depth, etc. This allows effective iterations with different sets of parameters.</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#6c7079;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#cd74e8;">class </span><span style="color:#f0c678;">CircuitInfo</span><span style="color:#adb7c9;">(</span><span style="color:#9acc76;">NamedTuple</span><span style="color:#adb7c9;">):
+</span><span style="color:#abb2bf;">    N: int
+</span><span style="color:#abb2bf;">    </span><span style="color:#eb6772;">DEPTH</span><span style="color:#abb2bf;">: int
+</span><span style="color:#abb2bf;">    Ntrain: int
+</span><span style="color:#abb2bf;">    Ntest: int 
+</span></code></pre>
+<p>Instantiate a global struct with 4 qubits, DEPTH = 1, 6 training data, 100 testing data (those parameters will not result in a very good prediction, as will be seen later on; those parameters will be changed)</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#6c7079;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#abb2bf;">circuit_info </span><span style="color:#adb7c9;">= </span><span style="color:#eb6772;">CircuitInfo</span><span style="color:#abb2bf;">(</span><span style="color:#db9d63;">4</span><span style="color:#abb2bf;">, </span><span style="color:#db9d63;">1</span><span style="color:#abb2bf;">, </span><span style="color:#db9d63;">6</span><span style="color:#abb2bf;">, </span><span style="color:#db9d63;">100</span><span style="color:#abb2bf;">)
+</span></code></pre>
+<p>Note that DEPTH is depth of the circuit for $U(x_i)$ by treating the following as a single unit. This convention can be seen in <strong><a rel="noopener nofollow noreferrer" target="_blank" href="https://qml.baidu.com/quick-start/quantum-neural-network.html#2-built-in-circuit-templates"> Baidu Paddel Quantum – Quantum Neural Network, Built-in Circuits</a></strong> (the picture right underneath Eq 3.).</p>
+<pre style="background-color:#2b303b;color:#6c7079;"><code><span style="color:#abb2bf;">--Rx----Ry----Rz----Rxx----Ryy----------------
+</span><span style="color:#abb2bf;">                     |      |                                
+</span><span style="color:#abb2bf;">--Rx----Ry----Rz----Rxx----Ryy----Rxx----Ryy--
+</span><span style="color:#abb2bf;">                                   |      |      
+</span><span style="color:#abb2bf;">--Rx----Ry----Rz----Rxx----Ryy----Rxx----Ryy--
+</span><span style="color:#abb2bf;">                     |      |                                                 
+</span><span style="color:#abb2bf;">--Rx----Ry----Rz----Rxx----Ryy----------------
+</span></code></pre>
+<h3 id="dataset-generation">Dataset generation</h3>
+<p>Generate a binary classification data set. Note that the data generated here does not necessarily represent any real supernova clusters as I am not well trained enough in astronomy to generate realistic dataset on my own. Kaggle has one but I think it is not well collected. Taking into considertation that how the data is generated is not crucial in presenting the core algorithm, it is okay to do that. The function below puts the data into a 3d array which may have differed from what Peters, et al.(2021) [1] have done in their paper. However, it should be noted that the data can be reshaped to the desired dimensions. </p>
+<pre data-lang="python" style="background-color:#2b303b;color:#6c7079;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#cd74e8;">def </span><span style="color:#5cb3fa;">data_generator</span><span style="color:#abb2bf;">(</span><span style="color:#eb6772;">boundary_gap</span><span style="color:#abb2bf;">):
+</span><span style="color:#abb2bf;">    X </span><span style="color:#adb7c9;">= </span><span style="color:#abb2bf;">[]
+</span><span style="color:#abb2bf;">    Y </span><span style="color:#adb7c9;">= </span><span style="color:#abb2bf;">[]
+</span><span style="color:#abb2bf;">    </span><span style="color:#cd74e8;">for </span><span style="color:#abb2bf;">k </span><span style="color:#cd74e8;">in </span><span style="color:#5ebfcc;">range</span><span style="color:#abb2bf;">(circuit_info.Ntrain </span><span style="color:#adb7c9;">+ </span><span style="color:#abb2bf;">circuit_info.Ntest):
+</span><span style="color:#abb2bf;">        </span><span style="font-style:italic;color:#5f697a;"># generate two different types of data
+</span><span style="color:#abb2bf;">        vec </span><span style="color:#adb7c9;">= </span><span style="color:#abb2bf;">[]
+</span><span style="color:#abb2bf;">        </span><span style="color:#cd74e8;">if </span><span style="color:#abb2bf;">(np.random.</span><span style="color:#eb6772;">rand</span><span style="color:#abb2bf;">() </span><span style="color:#adb7c9;">&lt; </span><span style="color:#abb2bf;">boundary_gap):
+</span><span style="color:#abb2bf;">            vec </span><span style="color:#adb7c9;">= </span><span style="color:#abb2bf;">vec </span><span style="color:#adb7c9;">+ </span><span style="color:#abb2bf;">[np.random.</span><span style="color:#eb6772;">rand</span><span style="color:#abb2bf;">() </span><span style="color:#cd74e8;">for </span><span style="color:#eb6772;">_ </span><span style="color:#cd74e8;">in </span><span style="color:#5ebfcc;">range</span><span style="color:#abb2bf;">(</span><span style="color:#db9d63;">3</span><span style="color:#adb7c9;">*</span><span style="color:#abb2bf;">circuit_info.N</span><span style="color:#adb7c9;">*</span><span style="color:#abb2bf;">circuit_info.</span><span style="color:#eb6772;">DEPTH</span><span style="color:#abb2bf;">)]
+</span><span style="color:#abb2bf;">            Y.</span><span style="color:#eb6772;">append</span><span style="color:#abb2bf;">(</span><span style="color:#db9d63;">1</span><span style="color:#abb2bf;">)
+</span><span style="color:#abb2bf;">        </span><span style="color:#cd74e8;">else</span><span style="color:#abb2bf;">:
+</span><span style="color:#abb2bf;">            vec </span><span style="color:#adb7c9;">= </span><span style="color:#abb2bf;">vec </span><span style="color:#adb7c9;">+ </span><span style="color:#abb2bf;">[np.random.</span><span style="color:#eb6772;">rand</span><span style="color:#abb2bf;">() </span><span style="color:#cd74e8;">for </span><span style="color:#eb6772;">_ </span><span style="color:#cd74e8;">in </span><span style="color:#5ebfcc;">range</span><span style="color:#abb2bf;">(circuit_info.N</span><span style="color:#adb7c9;">*</span><span style="color:#abb2bf;">circuit_info.</span><span style="color:#eb6772;">DEPTH</span><span style="color:#abb2bf;">)]
+</span><span style="color:#abb2bf;">            vec </span><span style="color:#adb7c9;">= </span><span style="color:#abb2bf;">vec </span><span style="color:#adb7c9;">+ </span><span style="color:#abb2bf;">[np.random.</span><span style="color:#eb6772;">rand</span><span style="color:#abb2bf;">()</span><span style="color:#adb7c9;">*</span><span style="color:#db9d63;">10 </span><span style="color:#cd74e8;">for </span><span style="color:#eb6772;">_ </span><span style="color:#cd74e8;">in </span><span style="color:#5ebfcc;">range</span><span style="color:#abb2bf;">(</span><span style="color:#db9d63;">2</span><span style="color:#adb7c9;">*</span><span style="color:#abb2bf;">circuit_info.N</span><span style="color:#adb7c9;">*</span><span style="color:#abb2bf;">circuit_info.</span><span style="color:#eb6772;">DEPTH</span><span style="color:#abb2bf;">)]
+</span><span style="color:#abb2bf;">            Y.</span><span style="color:#eb6772;">append</span><span style="color:#abb2bf;">(</span><span style="color:#db9d63;">0</span><span style="color:#abb2bf;">)
+</span><span style="color:#abb2bf;">        X.</span><span style="color:#eb6772;">append</span><span style="color:#abb2bf;">(vec)
+</span><span style="color:#abb2bf;">    X </span><span style="color:#adb7c9;">= </span><span style="color:#abb2bf;">np.</span><span style="color:#eb6772;">array</span><span style="color:#abb2bf;">(X).</span><span style="color:#eb6772;">astype</span><span style="color:#abb2bf;">(</span><span style="color:#9acc76;">&quot;float64&quot;</span><span style="color:#abb2bf;">)
+</span><span style="color:#abb2bf;">    Y </span><span style="color:#adb7c9;">= </span><span style="color:#abb2bf;">np.</span><span style="color:#eb6772;">array</span><span style="color:#abb2bf;">(Y).</span><span style="color:#eb6772;">astype</span><span style="color:#abb2bf;">(</span><span style="color:#9acc76;">&quot;float64&quot;</span><span style="color:#abb2bf;">)
+</span><span style="color:#abb2bf;">    </span><span style="color:#cd74e8;">return </span><span style="color:#abb2bf;">X[</span><span style="color:#db9d63;">0</span><span style="color:#abb2bf;">:circuit_info.Ntrain], Y[</span><span style="color:#db9d63;">0</span><span style="color:#abb2bf;">:circuit_info.Ntrain], X[circuit_info.Ntrain:], Y[circuit_info.Ntrain:]
+</span></code></pre>
+<p>Notice that this could serve as reductions from a higher dimentional data – reduce original features into <code> 3*circuit_info.N*circuit_info.DEPTH</code> number of features. The values resulted by the reductions are distributed (<code>np.random</code>). Some sample reduction functions are shown below which are not necessary in this case (the numbers are randomized before and after the reduction).</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#6c7079;" class="language-python "><code class="language-python" data-lang="python"><span style="font-style:italic;color:#5f697a;"># A sample reduction function to reduce the first and second features into one
+</span><span style="color:#cd74e8;">def </span><span style="color:#5cb3fa;">a_first_reduction</span><span style="color:#abb2bf;">(</span><span style="color:#eb6772;">v</span><span style="color:#abb2bf;">, </span><span style="color:#eb6772;">w</span><span style="color:#abb2bf;">):
+</span><span style="color:#abb2bf;">    </span><span style="color:#cd74e8;">return </span><span style="color:#abb2bf;">np.</span><span style="color:#eb6772;">sqrt</span><span style="color:#abb2bf;">(v</span><span style="color:#adb7c9;">**</span><span style="color:#db9d63;">2</span><span style="color:#adb7c9;">+</span><span style="color:#abb2bf;">w</span><span style="color:#adb7c9;">**</span><span style="color:#db9d63;">2</span><span style="color:#abb2bf;">)</span><span style="color:#adb7c9;">/</span><span style="color:#db9d63;">4
+</span><span style="color:#abb2bf;">
+</span><span style="font-style:italic;color:#5f697a;"># A sample reduction function to reduce the last and second last features into one
+</span><span style="color:#cd74e8;">def </span><span style="color:#5cb3fa;">a_second_reduction</span><span style="color:#abb2bf;">(</span><span style="color:#eb6772;">v</span><span style="color:#abb2bf;">, </span><span style="color:#eb6772;">w</span><span style="color:#abb2bf;">):
+</span><span style="color:#abb2bf;">    </span><span style="color:#cd74e8;">return </span><span style="color:#abb2bf;">np.</span><span style="color:#eb6772;">sqrt</span><span style="color:#abb2bf;">(v</span><span style="color:#adb7c9;">**</span><span style="color:#db9d63;">2</span><span style="color:#adb7c9;">-</span><span style="color:#abb2bf;">w</span><span style="color:#adb7c9;">**</span><span style="color:#db9d63;">2</span><span style="color:#abb2bf;">)</span><span style="color:#adb7c9;">/</span><span style="color:#db9d63;">2
+</span></code></pre>
+<h3 id="svm-with-quantum-circuits">SVM with Quantum circuits</h3>
+<p>The two functions below are variations of the <code>q_kernel_estimator</code> and <code>q_kernel_matrix</code> shown in <strong><a rel="noopener nofollow noreferrer" target="_blank" href="https://qml.baidu.com/tutorials/machine-learning/quantum-kernel-methods.html#2-kernel-based-classification-with-paddle-quantum">Baidu Paddel Quantum – Quantum Kernel Method</a></strong>, with a difference that <strong>two disconnected</strong> circuits are returned, <code>cir1</code> and <code>cir2</code>, representing the circuits for $U(x_i)\text{ and }U(x_j)$
+respectively. <code>fin_state2.conj()</code> is the $U^\dagger(x_i)$. Those two functions are used to generate the customized kernel matrix.</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#6c7079;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#cd74e8;">def </span><span style="color:#5cb3fa;">q_kernel_estimator</span><span style="color:#abb2bf;">(</span><span style="color:#eb6772;">x1</span><span style="color:#abb2bf;">, </span><span style="color:#eb6772;">x2</span><span style="color:#abb2bf;">):
+</span><span style="color:#abb2bf;">    theta1 </span><span style="color:#adb7c9;">= </span><span style="color:#abb2bf;">paddle.</span><span style="color:#eb6772;">to_tensor</span><span style="color:#abb2bf;">(x1)
+</span><span style="color:#abb2bf;">    theta2 </span><span style="color:#adb7c9;">= </span><span style="color:#abb2bf;">paddle.</span><span style="color:#eb6772;">to_tensor</span><span style="color:#abb2bf;">(x2)
+</span><span style="color:#abb2bf;">    cir1 </span><span style="color:#adb7c9;">= </span><span style="color:#eb6772;">circuit</span><span style="color:#abb2bf;">(theta1)
+</span><span style="color:#abb2bf;">    cir2 </span><span style="color:#adb7c9;">= </span><span style="color:#eb6772;">circuit</span><span style="color:#abb2bf;">(theta2)
+</span><span style="color:#abb2bf;">    fin_state1 </span><span style="color:#adb7c9;">= </span><span style="color:#abb2bf;">cir1.</span><span style="color:#eb6772;">run_state_vector</span><span style="color:#abb2bf;">()
+</span><span style="color:#abb2bf;">    fin_state2 </span><span style="color:#adb7c9;">= </span><span style="color:#abb2bf;">cir2.</span><span style="color:#eb6772;">run_state_vector</span><span style="color:#abb2bf;">()
+</span><span style="color:#abb2bf;">    </span><span style="color:#cd74e8;">return </span><span style="color:#abb2bf;">(fin_state2.</span><span style="color:#eb6772;">conj</span><span style="color:#abb2bf;">() </span><span style="color:#adb7c9;">* </span><span style="color:#abb2bf;">fin_state1).</span><span style="color:#eb6772;">real</span><span style="color:#abb2bf;">().</span><span style="color:#eb6772;">numpy</span><span style="color:#abb2bf;">()[</span><span style="color:#db9d63;">0</span><span style="color:#abb2bf;">]
+</span><span style="color:#abb2bf;">
+</span><span style="color:#cd74e8;">def </span><span style="color:#5cb3fa;">q_kernel_matrix</span><span style="color:#abb2bf;">(</span><span style="color:#eb6772;">X1</span><span style="color:#abb2bf;">, </span><span style="color:#eb6772;">X2</span><span style="color:#abb2bf;">):
+</span><span style="color:#abb2bf;">    </span><span style="color:#cd74e8;">return </span><span style="color:#abb2bf;">np.</span><span style="color:#eb6772;">array</span><span style="color:#abb2bf;">([[</span><span style="color:#eb6772;">q_kernel_estimator</span><span style="color:#abb2bf;">(x1, x2) </span><span style="color:#cd74e8;">for </span><span style="color:#abb2bf;">x2 </span><span style="color:#cd74e8;">in </span><span style="color:#abb2bf;">X2] </span><span style="color:#cd74e8;">for </span><span style="color:#abb2bf;">x1 </span><span style="color:#cd74e8;">in </span><span style="color:#abb2bf;">X1])
+</span></code></pre>
+<h3 id="circuit">Circuit</h3>
+<p>The below function generates a quantum circuit based on the description in <strong>II. QUANTUM KERNEL SUPPORT VECTOR
+MACHINES, B.Circuit Design</strong> [1] and the algorithm is templated by <strong><a rel="noopener nofollow noreferrer" target="_blank" href="https://qml.baidu.com/quick-start/frequently-used-functions-in-paddle-quantum.html#2-8-vqa-basic-structure-1----create-your-own-quantum-circuit-as-a-function">Baidu Paddel Quantum – Quick start, Frequently used function, VQA basic structure</a></strong>, with one major obstacle – <script type="math/tex;mode=display">\sqrt{i\mathbf{SWAP}}</script>
+<script>
+    try {
+        var html = katex.renderToString(texString);
+        // '<span class="katex">...</span>'
+    } catch (e) {
+        if (e instanceof katex.ParseError) {
+            // KaTeX can't parse the expression
+            html = ("Error in LaTeX '" + texString + "': " + e.message)
+                .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        } else {
+            throw e;  // other error
+        }
+    }
+</script> is not native in <code>paddle_quantum</code>. However, upon further investigation, it can be genereted via a combination of two native gates:
+<script type="math/tex;mode=display">\sqrt{i\mathbf{SWAP}}=R_{xx}\big(\frac{-\pi}{4}\big)R_{yy}\big(\frac{-\pi}{4}\big)</script>
+<script>
+    try {
+        var html = katex.renderToString(texString);
+        // '<span class="katex">...</span>'
+    } catch (e) {
+        if (e instanceof katex.ParseError) {
+            // KaTeX can't parse the expression
+            html = ("Error in LaTeX '" + texString + "': " + e.message)
+                .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        } else {
+            throw e;  // other error
+        }
+    }
+</script></p>
+<pre data-lang="python" style="background-color:#2b303b;color:#6c7079;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#cd74e8;">def </span><span style="color:#5cb3fa;">circuit</span><span style="color:#abb2bf;">(</span><span style="color:#eb6772;">theta</span><span style="color:#abb2bf;">):
+</span><span style="color:#abb2bf;">    cir </span><span style="color:#adb7c9;">= </span><span style="color:#eb6772;">UAnsatz</span><span style="color:#abb2bf;">(circuit_info.N)
+</span><span style="color:#abb2bf;">    theta </span><span style="color:#adb7c9;">= </span><span style="color:#abb2bf;">paddle.</span><span style="color:#eb6772;">to_tensor</span><span style="color:#abb2bf;">(np.</span><span style="color:#eb6772;">reshape</span><span style="color:#abb2bf;">(theta, (circuit_info.N, circuit_info.</span><span style="color:#eb6772;">DEPTH</span><span style="color:#abb2bf;">, </span><span style="color:#db9d63;">3</span><span style="color:#abb2bf;">)))
+</span><span style="color:#abb2bf;">    </span><span style="color:#cd74e8;">for </span><span style="color:#abb2bf;">dep </span><span style="color:#cd74e8;">in </span><span style="color:#5ebfcc;">range</span><span style="color:#abb2bf;">(circuit_info.</span><span style="color:#eb6772;">DEPTH</span><span style="color:#abb2bf;">): 
+</span><span style="color:#abb2bf;">        </span><span style="color:#cd74e8;">for </span><span style="color:#abb2bf;">n </span><span style="color:#cd74e8;">in </span><span style="color:#5ebfcc;">range</span><span style="color:#abb2bf;">(circuit_info.N): 
+</span><span style="color:#abb2bf;">            cir.</span><span style="color:#eb6772;">rx</span><span style="color:#abb2bf;">(theta[n][dep][</span><span style="color:#db9d63;">0</span><span style="color:#abb2bf;">], n)  </span><span style="font-style:italic;color:#5f697a;"># add an Rx gate to the n-th qubit
+</span><span style="color:#abb2bf;">            cir.</span><span style="color:#eb6772;">ry</span><span style="color:#abb2bf;">(theta[n][dep][</span><span style="color:#db9d63;">1</span><span style="color:#abb2bf;">], n)  </span><span style="font-style:italic;color:#5f697a;"># add an Ry gate to the n-th qubit
+</span><span style="color:#abb2bf;">            cir.</span><span style="color:#eb6772;">rz</span><span style="color:#abb2bf;">(theta[n][dep][</span><span style="color:#db9d63;">2</span><span style="color:#abb2bf;">], n)  </span><span style="font-style:italic;color:#5f697a;"># add an Rz gate to the n-th qubit 
+</span><span style="color:#abb2bf;">        </span><span style="color:#cd74e8;">for </span><span style="color:#abb2bf;">n </span><span style="color:#cd74e8;">in </span><span style="color:#5ebfcc;">range</span><span style="color:#abb2bf;">(circuit_info.N </span><span style="color:#adb7c9;">- </span><span style="color:#db9d63;">1</span><span style="color:#abb2bf;">):
+</span><span style="color:#abb2bf;">            </span><span style="color:#cd74e8;">if </span><span style="color:#abb2bf;">n </span><span style="color:#adb7c9;">% </span><span style="color:#db9d63;">2 </span><span style="color:#adb7c9;">== </span><span style="color:#db9d63;">0 </span><span style="color:#cd74e8;">and </span><span style="color:#abb2bf;">(n </span><span style="color:#adb7c9;">&lt; </span><span style="color:#abb2bf;">circuit_info.N):
+</span><span style="color:#abb2bf;">                </span><span style="font-style:italic;color:#5f697a;"># the following two lines generate the (forward) square root of a iswap unit
+</span><span style="color:#abb2bf;">                </span><span style="font-style:italic;color:#5f697a;"># as there is no native implementation 
+</span><span style="color:#abb2bf;">                cir.</span><span style="color:#eb6772;">rxx</span><span style="color:#abb2bf;">(paddle.</span><span style="color:#eb6772;">to_tensor</span><span style="color:#abb2bf;">(np.</span><span style="color:#eb6772;">array</span><span style="color:#abb2bf;">([</span><span style="color:#adb7c9;">-</span><span style="color:#abb2bf;">np.pi</span><span style="color:#adb7c9;">/</span><span style="color:#db9d63;">4</span><span style="color:#abb2bf;">])), [n, n</span><span style="color:#adb7c9;">+</span><span style="color:#db9d63;">1</span><span style="color:#abb2bf;">])
+</span><span style="color:#abb2bf;">                cir.</span><span style="color:#eb6772;">ryy</span><span style="color:#abb2bf;">(paddle.</span><span style="color:#eb6772;">to_tensor</span><span style="color:#abb2bf;">(np.</span><span style="color:#eb6772;">array</span><span style="color:#abb2bf;">([</span><span style="color:#adb7c9;">-</span><span style="color:#abb2bf;">np.pi</span><span style="color:#adb7c9;">/</span><span style="color:#db9d63;">4</span><span style="color:#abb2bf;">])), [n, n</span><span style="color:#adb7c9;">+</span><span style="color:#db9d63;">1</span><span style="color:#abb2bf;">])
+</span><span style="color:#abb2bf;">        </span><span style="color:#cd74e8;">for </span><span style="color:#abb2bf;">n </span><span style="color:#cd74e8;">in </span><span style="color:#5ebfcc;">range</span><span style="color:#abb2bf;">(circuit_info.N </span><span style="color:#adb7c9;">- </span><span style="color:#db9d63;">1</span><span style="color:#abb2bf;">):
+</span><span style="color:#abb2bf;">            </span><span style="color:#cd74e8;">if </span><span style="color:#abb2bf;">n </span><span style="color:#adb7c9;">% </span><span style="color:#db9d63;">2 </span><span style="color:#adb7c9;">== </span><span style="color:#db9d63;">1 </span><span style="color:#cd74e8;">and </span><span style="color:#abb2bf;">(n </span><span style="color:#adb7c9;">&lt; </span><span style="color:#abb2bf;">circuit_info.N </span><span style="color:#adb7c9;">- </span><span style="color:#db9d63;">1</span><span style="color:#abb2bf;">):
+</span><span style="color:#abb2bf;">                cir.</span><span style="color:#eb6772;">rxx</span><span style="color:#abb2bf;">(paddle.</span><span style="color:#eb6772;">to_tensor</span><span style="color:#abb2bf;">(np.</span><span style="color:#eb6772;">array</span><span style="color:#abb2bf;">([</span><span style="color:#adb7c9;">-</span><span style="color:#abb2bf;">np.pi</span><span style="color:#adb7c9;">/</span><span style="color:#db9d63;">4</span><span style="color:#abb2bf;">])), [n, n</span><span style="color:#adb7c9;">+</span><span style="color:#db9d63;">1</span><span style="color:#abb2bf;">])
+</span><span style="color:#abb2bf;">                cir.</span><span style="color:#eb6772;">ryy</span><span style="color:#abb2bf;">(paddle.</span><span style="color:#eb6772;">to_tensor</span><span style="color:#abb2bf;">(np.</span><span style="color:#eb6772;">array</span><span style="color:#abb2bf;">([</span><span style="color:#adb7c9;">-</span><span style="color:#abb2bf;">np.pi</span><span style="color:#adb7c9;">/</span><span style="color:#db9d63;">4</span><span style="color:#abb2bf;">])), [n, n</span><span style="color:#adb7c9;">+</span><span style="color:#db9d63;">1</span><span style="color:#abb2bf;">])
+</span><span style="color:#abb2bf;">    </span><span style="color:#cd74e8;">return </span><span style="color:#abb2bf;">cir
+</span></code></pre>
+<p>An example circuit generated by the above code is as follows</p>
+<pre style="background-color:#2b303b;color:#6c7079;"><code><span style="color:#abb2bf;">--Rx(0.528)----Ry(0.119)----Rz(0.640)----Rxx(-0.7)----Ryy(-0.7)----------------------------
+</span><span style="color:#abb2bf;">                                             |            |                                
+</span><span style="color:#abb2bf;">--Rx(0.091)----Ry(0.332)----Rz(0.427)----Rxx(-0.7)----Ryy(-0.7)----Rxx(-0.7)----Ryy(-0.7)--
+</span><span style="color:#abb2bf;">                                                                       |            |      
+</span><span style="color:#abb2bf;">--Rx(5.544)----Ry(6.281)----Rz(6.974)----Rxx(-0.7)----Ryy(-0.7)----Rxx(-0.7)----Ryy(-0.7)--
+</span><span style="color:#abb2bf;">                                             |            |                                
+</span><span style="color:#abb2bf;">--Rx(7.899)----Ry(1.319)----Rz(3.428)----Rxx(-0.7)----Ryy(-0.7)----Rxx(-0.7)----Ryy(-0.7)--
+</span><span style="color:#abb2bf;">                                                                       |            |      
+</span><span style="color:#abb2bf;">--Rx(2.016)----Ry(7.073)----Rz(0.334)----Rxx(-0.7)----Ryy(-0.7)----Rxx(-0.7)----Ryy(-0.7)--
+</span><span style="color:#abb2bf;">                                             |            |                                
+</span><span style="color:#abb2bf;">--Rx(9.093)----Ry(4.052)----Rz(7.604)----Rxx(-0.7)----Ryy(-0.7)----------------------------
+</span></code></pre>
+<p>The example circuit is for a 18-dimensional data.</p>
+<h3 id="training-results">Training results</h3>
+<p><code>result</code> calls the SVM implemented with the custumized circuit, predicts for the testing set, and returns the accuracies for the trainning and testing sets. </p>
+<pre data-lang="python" style="background-color:#2b303b;color:#6c7079;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#cd74e8;">def </span><span style="color:#5cb3fa;">result</span><span style="color:#abb2bf;">():
+</span><span style="color:#abb2bf;">    svm_qke </span><span style="color:#adb7c9;">= </span><span style="color:#abb2bf;">svm.</span><span style="color:#eb6772;">SVC</span><span style="color:#abb2bf;">(</span><span style="color:#eb6772;">kernel</span><span style="color:#adb7c9;">=</span><span style="color:#abb2bf;">q_kernel_matrix)
+</span><span style="color:#abb2bf;">    X_train, y_train, X_test, y_test </span><span style="color:#adb7c9;">= </span><span style="color:#eb6772;">data_generator</span><span style="color:#abb2bf;">(</span><span style="color:#db9d63;">0.5</span><span style="color:#abb2bf;">)
+</span><span style="color:#abb2bf;">    svm_qke.</span><span style="color:#eb6772;">fit</span><span style="color:#abb2bf;">(X_train, y_train)
+</span><span style="color:#abb2bf;">    predict_svm_qke_train </span><span style="color:#adb7c9;">= </span><span style="color:#abb2bf;">svm_qke.</span><span style="color:#eb6772;">predict</span><span style="color:#abb2bf;">(X_train)
+</span><span style="color:#abb2bf;">    predict_svm_qke_test </span><span style="color:#adb7c9;">= </span><span style="color:#abb2bf;">svm_qke.</span><span style="color:#eb6772;">predict</span><span style="color:#abb2bf;">(X_test)
+</span><span style="color:#abb2bf;">    accuracy_train </span><span style="color:#adb7c9;">= </span><span style="color:#abb2bf;">np.</span><span style="color:#eb6772;">array</span><span style="color:#abb2bf;">(predict_svm_qke_train </span><span style="color:#adb7c9;">== </span><span style="color:#abb2bf;">y_train, </span><span style="color:#eb6772;">dtype</span><span style="color:#adb7c9;">=</span><span style="color:#abb2bf;">int).</span><span style="color:#eb6772;">sum</span><span style="color:#abb2bf;">()</span><span style="color:#adb7c9;">/</span><span style="color:#5ebfcc;">len</span><span style="color:#abb2bf;">(y_train)
+</span><span style="color:#abb2bf;">    accuracy_test </span><span style="color:#adb7c9;">= </span><span style="color:#abb2bf;">np.</span><span style="color:#eb6772;">array</span><span style="color:#abb2bf;">(predict_svm_qke_test </span><span style="color:#adb7c9;">== </span><span style="color:#abb2bf;">y_test, </span><span style="color:#eb6772;">dtype</span><span style="color:#adb7c9;">=</span><span style="color:#abb2bf;">int).</span><span style="color:#eb6772;">sum</span><span style="color:#abb2bf;">()</span><span style="color:#adb7c9;">/</span><span style="color:#5ebfcc;">len</span><span style="color:#abb2bf;">(y_test)
+</span><span style="color:#abb2bf;">    </span><span style="color:#cd74e8;">return </span><span style="color:#abb2bf;">accuracy_train, accuracy_test
+</span></code></pre>
+<p><code>change_Ntrain</code> changes the number of data in the training set ($[6, 16)$ in steps of 2)  while keeping the other parameters constant.</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#6c7079;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#cd74e8;">def </span><span style="color:#5cb3fa;">change_Ntrain</span><span style="color:#abb2bf;">():
+</span><span style="color:#abb2bf;">    </span><span style="color:#cd74e8;">global </span><span style="color:#abb2bf;">circuit_info 
+</span><span style="color:#abb2bf;">    </span><span style="font-style:italic;color:#5f697a;"># temp holds the attribute that is changing for recovery
+</span><span style="color:#abb2bf;">    temp </span><span style="color:#adb7c9;">= </span><span style="color:#abb2bf;">circuit_info.Ntrain
+</span><span style="color:#abb2bf;">    Ntrain_lst </span><span style="color:#adb7c9;">= </span><span style="color:#5ebfcc;">range</span><span style="color:#abb2bf;">(temp, temp </span><span style="color:#adb7c9;">+ </span><span style="color:#db9d63;">10</span><span style="color:#abb2bf;">, </span><span style="color:#db9d63;">2</span><span style="color:#abb2bf;">)
+</span><span style="color:#abb2bf;">    res_train </span><span style="color:#adb7c9;">= </span><span style="color:#abb2bf;">[]
+</span><span style="color:#abb2bf;">    res_test </span><span style="color:#adb7c9;">= </span><span style="color:#abb2bf;">[]
+</span><span style="color:#abb2bf;">    time_elapsed </span><span style="color:#adb7c9;">= </span><span style="color:#abb2bf;">[]
+</span><span style="color:#abb2bf;">    </span><span style="color:#cd74e8;">for </span><span style="color:#abb2bf;">k </span><span style="color:#cd74e8;">in </span><span style="color:#abb2bf;">Ntrain_lst:
+</span><span style="color:#abb2bf;">        circuit_info </span><span style="color:#adb7c9;">= </span><span style="color:#eb6772;">CircuitInfo</span><span style="color:#abb2bf;">(circuit_info.N, circuit_info.</span><span style="color:#eb6772;">DEPTH</span><span style="color:#abb2bf;">, k, circuit_info.Ntest)
+</span><span style="color:#abb2bf;">        start </span><span style="color:#adb7c9;">= </span><span style="color:#abb2bf;">time.</span><span style="color:#eb6772;">time</span><span style="color:#abb2bf;">()
+</span><span style="color:#abb2bf;">        a, b </span><span style="color:#adb7c9;">= </span><span style="color:#eb6772;">result</span><span style="color:#abb2bf;">()
+</span><span style="color:#abb2bf;">        end </span><span style="color:#adb7c9;">= </span><span style="color:#abb2bf;">time.</span><span style="color:#eb6772;">time</span><span style="color:#abb2bf;">()
+</span><span style="color:#abb2bf;">        res_train.</span><span style="color:#eb6772;">append</span><span style="color:#abb2bf;">(a)
+</span><span style="color:#abb2bf;">        res_test.</span><span style="color:#eb6772;">append</span><span style="color:#abb2bf;">(b)
+</span><span style="color:#abb2bf;">        time_elapsed.</span><span style="color:#eb6772;">append</span><span style="color:#abb2bf;">(end </span><span style="color:#adb7c9;">- </span><span style="color:#abb2bf;">start)
+</span><span style="color:#abb2bf;">    fig, ax </span><span style="color:#adb7c9;">= </span><span style="color:#abb2bf;">plt.</span><span style="color:#eb6772;">subplots</span><span style="color:#abb2bf;">(</span><span style="color:#db9d63;">1</span><span style="color:#abb2bf;">, </span><span style="color:#db9d63;">3</span><span style="color:#abb2bf;">)
+</span><span style="color:#abb2bf;">    ax[</span><span style="color:#db9d63;">0</span><span style="color:#abb2bf;">].</span><span style="color:#eb6772;">scatter</span><span style="color:#abb2bf;">(Ntrain_lst, res_train, </span><span style="color:#eb6772;">marker</span><span style="color:#adb7c9;">=</span><span style="color:#9acc76;">&#39;o&#39;</span><span style="color:#abb2bf;">)
+</span><span style="color:#abb2bf;">    ax[</span><span style="color:#db9d63;">0</span><span style="color:#abb2bf;">].</span><span style="color:#eb6772;">set_title</span><span style="color:#abb2bf;">(</span><span style="color:#9acc76;">&#39;Train&#39;</span><span style="color:#abb2bf;">)
+</span><span style="color:#abb2bf;">    ax[</span><span style="color:#db9d63;">1</span><span style="color:#abb2bf;">].</span><span style="color:#eb6772;">scatter</span><span style="color:#abb2bf;">(Ntrain_lst, res_test, </span><span style="color:#eb6772;">marker</span><span style="color:#adb7c9;">=</span><span style="color:#9acc76;">&#39;*&#39;</span><span style="color:#abb2bf;">)
+</span><span style="color:#abb2bf;">    ax[</span><span style="color:#db9d63;">1</span><span style="color:#abb2bf;">].</span><span style="color:#eb6772;">set_title</span><span style="color:#abb2bf;">(</span><span style="color:#9acc76;">&#39;Test&#39;</span><span style="color:#abb2bf;">)
+</span><span style="color:#abb2bf;">    ax[</span><span style="color:#db9d63;">2</span><span style="color:#abb2bf;">].</span><span style="color:#eb6772;">scatter</span><span style="color:#abb2bf;">(Ntrain_lst, time_elapsed, </span><span style="color:#eb6772;">marker</span><span style="color:#adb7c9;">=</span><span style="color:#9acc76;">&#39;v&#39;</span><span style="color:#abb2bf;">)
+</span><span style="color:#abb2bf;">    ax[</span><span style="color:#db9d63;">2</span><span style="color:#abb2bf;">].</span><span style="color:#eb6772;">set_title</span><span style="color:#abb2bf;">(</span><span style="color:#9acc76;">&#39;Time(s)&#39;</span><span style="color:#abb2bf;">)
+</span><span style="color:#abb2bf;">    circuit_info </span><span style="color:#adb7c9;">= </span><span style="color:#eb6772;">CircuitInfo</span><span style="color:#abb2bf;">(circuit_info.N, circuit_info.</span><span style="color:#eb6772;">DEPTH</span><span style="color:#abb2bf;">, temp, circuit_info.Ntest)
+</span></code></pre>
+<p><code>change_N</code> changes the number of qubits ($[4, 15)$ in steps of 2) while keeping the other parameters constant.</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#6c7079;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#cd74e8;">def </span><span style="color:#5cb3fa;">change_N</span><span style="color:#abb2bf;">():
+</span><span style="color:#abb2bf;">    </span><span style="color:#cd74e8;">global </span><span style="color:#abb2bf;">circuit_info 
+</span><span style="color:#abb2bf;">    </span><span style="font-style:italic;color:#5f697a;"># temp holds the attribute that is changing for recovery
+</span><span style="color:#abb2bf;">    temp </span><span style="color:#adb7c9;">= </span><span style="color:#abb2bf;">circuit_info.N
+</span><span style="color:#abb2bf;">    N_lst </span><span style="color:#adb7c9;">= </span><span style="color:#5ebfcc;">range</span><span style="color:#abb2bf;">(temp, temp </span><span style="color:#adb7c9;">+ </span><span style="color:#db9d63;">11</span><span style="color:#abb2bf;">, </span><span style="color:#db9d63;">2</span><span style="color:#abb2bf;">)
+</span><span style="color:#abb2bf;">    res_train </span><span style="color:#adb7c9;">= </span><span style="color:#abb2bf;">[]
+</span><span style="color:#abb2bf;">    res_test </span><span style="color:#adb7c9;">= </span><span style="color:#abb2bf;">[]
+</span><span style="color:#abb2bf;">    time_elapsed </span><span style="color:#adb7c9;">= </span><span style="color:#abb2bf;">[]
+</span><span style="color:#abb2bf;">    </span><span style="color:#cd74e8;">for </span><span style="color:#abb2bf;">k </span><span style="color:#cd74e8;">in </span><span style="color:#abb2bf;">N_lst:
+</span><span style="color:#abb2bf;">        circuit_info </span><span style="color:#adb7c9;">= </span><span style="color:#eb6772;">CircuitInfo</span><span style="color:#abb2bf;">(k, circuit_info.</span><span style="color:#eb6772;">DEPTH</span><span style="color:#abb2bf;">, circuit_info.Ntrain, circuit_info.Ntest)
+</span><span style="color:#abb2bf;">        start </span><span style="color:#adb7c9;">= </span><span style="color:#abb2bf;">time.</span><span style="color:#eb6772;">time</span><span style="color:#abb2bf;">()
+</span><span style="color:#abb2bf;">        a, b </span><span style="color:#adb7c9;">= </span><span style="color:#eb6772;">result</span><span style="color:#abb2bf;">()
+</span><span style="color:#abb2bf;">        end </span><span style="color:#adb7c9;">= </span><span style="color:#abb2bf;">time.</span><span style="color:#eb6772;">time</span><span style="color:#abb2bf;">()
+</span><span style="color:#abb2bf;">        res_train.</span><span style="color:#eb6772;">append</span><span style="color:#abb2bf;">(a)
+</span><span style="color:#abb2bf;">        res_test.</span><span style="color:#eb6772;">append</span><span style="color:#abb2bf;">(b)
+</span><span style="color:#abb2bf;">        time_elapsed.</span><span style="color:#eb6772;">append</span><span style="color:#abb2bf;">(end </span><span style="color:#adb7c9;">- </span><span style="color:#abb2bf;">start)
+</span><span style="color:#abb2bf;">    fig, ax </span><span style="color:#adb7c9;">= </span><span style="color:#abb2bf;">plt.</span><span style="color:#eb6772;">subplots</span><span style="color:#abb2bf;">(</span><span style="color:#db9d63;">1</span><span style="color:#abb2bf;">, </span><span style="color:#db9d63;">3</span><span style="color:#abb2bf;">)
+</span><span style="color:#abb2bf;">    ax[</span><span style="color:#db9d63;">0</span><span style="color:#abb2bf;">].</span><span style="color:#eb6772;">scatter</span><span style="color:#abb2bf;">(N_lst, res_train, </span><span style="color:#eb6772;">marker</span><span style="color:#adb7c9;">=</span><span style="color:#9acc76;">&#39;o&#39;</span><span style="color:#abb2bf;">)
+</span><span style="color:#abb2bf;">    ax[</span><span style="color:#db9d63;">0</span><span style="color:#abb2bf;">].</span><span style="color:#eb6772;">set_title</span><span style="color:#abb2bf;">(</span><span style="color:#9acc76;">&#39;Train&#39;</span><span style="color:#abb2bf;">)
+</span><span style="color:#abb2bf;">    ax[</span><span style="color:#db9d63;">1</span><span style="color:#abb2bf;">].</span><span style="color:#eb6772;">scatter</span><span style="color:#abb2bf;">(N_lst, res_test, </span><span style="color:#eb6772;">marker</span><span style="color:#adb7c9;">=</span><span style="color:#9acc76;">&#39;*&#39;</span><span style="color:#abb2bf;">)
+</span><span style="color:#abb2bf;">    ax[</span><span style="color:#db9d63;">1</span><span style="color:#abb2bf;">].</span><span style="color:#eb6772;">set_title</span><span style="color:#abb2bf;">(</span><span style="color:#9acc76;">&#39;Test&#39;</span><span style="color:#abb2bf;">)
+</span><span style="color:#abb2bf;">    ax[</span><span style="color:#db9d63;">2</span><span style="color:#abb2bf;">].</span><span style="color:#eb6772;">scatter</span><span style="color:#abb2bf;">(N_lst, time_elapsed, </span><span style="color:#eb6772;">marker</span><span style="color:#adb7c9;">=</span><span style="color:#9acc76;">&#39;v&#39;</span><span style="color:#abb2bf;">)
+</span><span style="color:#abb2bf;">    ax[</span><span style="color:#db9d63;">2</span><span style="color:#abb2bf;">].</span><span style="color:#eb6772;">set_title</span><span style="color:#abb2bf;">(</span><span style="color:#9acc76;">&#39;Time(s)&#39;</span><span style="color:#abb2bf;">)
+</span><span style="color:#abb2bf;">    circuit_info </span><span style="color:#adb7c9;">= </span><span style="color:#eb6772;">CircuitInfo</span><span style="color:#abb2bf;">(temp, circuit_info.</span><span style="color:#eb6772;">DEPTH</span><span style="color:#abb2bf;">, circuit_info.Ntrain, circuit_info.Ntest)
+</span></code></pre>
+<p><code>change_DEPTH</code> changes the DEPTH of the circuit ($[1, 6)$ in steps of 1) while keeping the other parameters constant.</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#6c7079;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#cd74e8;">def </span><span style="color:#5cb3fa;">change_DEPTH</span><span style="color:#abb2bf;">():
+</span><span style="color:#abb2bf;">    </span><span style="color:#cd74e8;">global </span><span style="color:#abb2bf;">circuit_info 
+</span><span style="color:#abb2bf;">    </span><span style="font-style:italic;color:#5f697a;"># temp holds the attribute that is changing for recovery
+</span><span style="color:#abb2bf;">    temp </span><span style="color:#adb7c9;">= </span><span style="color:#abb2bf;">circuit_info.</span><span style="color:#eb6772;">DEPTH
+</span><span style="color:#abb2bf;">    DEPTH_lst </span><span style="color:#adb7c9;">= </span><span style="color:#5ebfcc;">range</span><span style="color:#abb2bf;">(temp, temp </span><span style="color:#adb7c9;">+ </span><span style="color:#db9d63;">5</span><span style="color:#abb2bf;">)
+</span><span style="color:#abb2bf;">    res_train </span><span style="color:#adb7c9;">= </span><span style="color:#abb2bf;">[]
+</span><span style="color:#abb2bf;">    res_test </span><span style="color:#adb7c9;">= </span><span style="color:#abb2bf;">[]
+</span><span style="color:#abb2bf;">    time_elapsed </span><span style="color:#adb7c9;">= </span><span style="color:#abb2bf;">[]
+</span><span style="color:#abb2bf;">    </span><span style="color:#cd74e8;">for </span><span style="color:#abb2bf;">k </span><span style="color:#cd74e8;">in </span><span style="color:#abb2bf;">DEPTH_lst:
+</span><span style="color:#abb2bf;">        circuit_info </span><span style="color:#adb7c9;">= </span><span style="color:#eb6772;">CircuitInfo</span><span style="color:#abb2bf;">(circuit_info.N, k, circuit_info.Ntrain, circuit_info.Ntest)
+</span><span style="color:#abb2bf;">        start </span><span style="color:#adb7c9;">= </span><span style="color:#abb2bf;">time.</span><span style="color:#eb6772;">time</span><span style="color:#abb2bf;">()
+</span><span style="color:#abb2bf;">        a, b </span><span style="color:#adb7c9;">= </span><span style="color:#eb6772;">result</span><span style="color:#abb2bf;">()
+</span><span style="color:#abb2bf;">        end </span><span style="color:#adb7c9;">= </span><span style="color:#abb2bf;">time.</span><span style="color:#eb6772;">time</span><span style="color:#abb2bf;">()
+</span><span style="color:#abb2bf;">        res_train.</span><span style="color:#eb6772;">append</span><span style="color:#abb2bf;">(a)
+</span><span style="color:#abb2bf;">        res_test.</span><span style="color:#eb6772;">append</span><span style="color:#abb2bf;">(b)
+</span><span style="color:#abb2bf;">        time_elapsed.</span><span style="color:#eb6772;">append</span><span style="color:#abb2bf;">(end </span><span style="color:#adb7c9;">- </span><span style="color:#abb2bf;">start)
+</span><span style="color:#abb2bf;">    fig, ax </span><span style="color:#adb7c9;">= </span><span style="color:#abb2bf;">plt.</span><span style="color:#eb6772;">subplots</span><span style="color:#abb2bf;">(</span><span style="color:#db9d63;">1</span><span style="color:#abb2bf;">, </span><span style="color:#db9d63;">3</span><span style="color:#abb2bf;">)
+</span><span style="color:#abb2bf;">    ax[</span><span style="color:#db9d63;">0</span><span style="color:#abb2bf;">].</span><span style="color:#eb6772;">scatter</span><span style="color:#abb2bf;">(DEPTH_lst, res_train, </span><span style="color:#eb6772;">marker</span><span style="color:#adb7c9;">=</span><span style="color:#9acc76;">&#39;o&#39;</span><span style="color:#abb2bf;">)
+</span><span style="color:#abb2bf;">    ax[</span><span style="color:#db9d63;">0</span><span style="color:#abb2bf;">].</span><span style="color:#eb6772;">set_title</span><span style="color:#abb2bf;">(</span><span style="color:#9acc76;">&#39;Train&#39;</span><span style="color:#abb2bf;">)
+</span><span style="color:#abb2bf;">    ax[</span><span style="color:#db9d63;">1</span><span style="color:#abb2bf;">].</span><span style="color:#eb6772;">scatter</span><span style="color:#abb2bf;">(DEPTH_lst, res_test, </span><span style="color:#eb6772;">marker</span><span style="color:#adb7c9;">=</span><span style="color:#9acc76;">&#39;*&#39;</span><span style="color:#abb2bf;">)
+</span><span style="color:#abb2bf;">    ax[</span><span style="color:#db9d63;">1</span><span style="color:#abb2bf;">].</span><span style="color:#eb6772;">set_title</span><span style="color:#abb2bf;">(</span><span style="color:#9acc76;">&#39;Test&#39;</span><span style="color:#abb2bf;">)
+</span><span style="color:#abb2bf;">    ax[</span><span style="color:#db9d63;">2</span><span style="color:#abb2bf;">].</span><span style="color:#eb6772;">scatter</span><span style="color:#abb2bf;">(DEPTH_lst, time_elapsed, </span><span style="color:#eb6772;">marker</span><span style="color:#adb7c9;">=</span><span style="color:#9acc76;">&#39;v&#39;</span><span style="color:#abb2bf;">)
+</span><span style="color:#abb2bf;">    ax[</span><span style="color:#db9d63;">2</span><span style="color:#abb2bf;">].</span><span style="color:#eb6772;">set_title</span><span style="color:#abb2bf;">(</span><span style="color:#9acc76;">&#39;Time(s)&#39;</span><span style="color:#abb2bf;">)
+</span><span style="color:#abb2bf;">    circuit_info </span><span style="color:#adb7c9;">= </span><span style="color:#eb6772;">CircuitInfo</span><span style="color:#abb2bf;">(circuit_info.N, temp, circuit_info.Ntrain, circuit_info.Ntest)
+</span></code></pre>
+<p>Call the three functions and visualize the results. (NOTE: do not run those on Jupyter, they are pretty slow. I have to use 3 different consoles to run all three of them concurrently.)</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#6c7079;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#eb6772;">change_Ntrain</span><span style="color:#abb2bf;">()
+</span></code></pre>
+<p><img src="https://github.com/jxuanli/jxuanli.github.io/blob/main/content/projects/pics/svm/svm1.png" alt="1.png" /></p>
+<pre data-lang="python" style="background-color:#2b303b;color:#6c7079;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#eb6772;">change_N</span><span style="color:#abb2bf;">()
+</span></code></pre>
+<p><img src="https://github.com/jxuanli/jxuanli.github.io/blob/main/content/projects/pics/svm/svm2.png" alt="2.png" /></p>
+<pre data-lang="python" style="background-color:#2b303b;color:#6c7079;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#eb6772;">change_DEPTH</span><span style="color:#abb2bf;">()
+</span></code></pre>
+<p><img src="https://github.com/jxuanli/jxuanli.github.io/blob/main/content/projects/pics/svm/svm3.png" alt="3.png" /></p>
+<p>[1] Evan Peters, João Caldeira, Alan Ho, Stefan Leichenauer, Masoud Mohseni, Hartmut Neven, Panagiotis Spentzouris, Doug Strain, and Gabriel N. Perdue, Machine learning of high dimensional data on a noisy quantum processor (2021), arXiv: https://arxiv.org/abs/2101.09581</p>
+
+          </div>
+        </article>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+
+  
+  <section class="modal" id="search-modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Search</p>
+      </header>
+      <section class="modal-card-body">
+        <div class="field mb-2">
+          <div class="control">
+            <input class="input" id="search" placeholder="Search this website." type="search" />
+          </div>
+        </div>
+        <div class="search-results">
+          <div class="search-results__items"></div>
+        </div>
+      </section>
+    </div>
+    <button aria-label="close" class="modal-close is-large"></button>
+  </section>
+  
+
+
+  
+
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <nav class="level">
+          
+          <div class="level-item has-text-centered">
+            <a class="button is-black is-outlined" href="https:&#x2F;&#x2F;jxuanli.github.io&#x2F;projects&#x2F;quantum-device&#x2F;">
+              <span class="icon mr-2">
+                <i class="fas fa-arrow-circle-left"></i>
+              </span>
+              Quantum Device
+            </a>
+          </div>
+           
+          <div class="level-item has-text-centered">
+            <a class="button is-black is-outlined" href="https:&#x2F;&#x2F;jxuanli.github.io&#x2F;projects&#x2F;imagine-ubc&#x2F;">
+              Imagine UBC<span class="icon ml-2">
+                <i class="fas fa-arrow-circle-right"></i>
+              </span>
+            </a>
+          </div>
+            
+        </nav>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+  
+
+
+
+  <footer class="footer py-4">
+    <div class="content has-text-centered">
+      <!-- <p>
+        Built with
+        <span class="icon-text">
+          <span class="icon">
+            <i class="fas fa-code"></i>
+          </span>
+          <span>code</span>
+        </span>
+        and
+        <span class="icon-text">
+          <span class="icon">
+            <i class="fas fa-heart"></i>
+          </span>
+          <span>love</span>
+        </span>
+      </p> -->
+      <p>
+        Powered by
+        <span class="icon-text">
+          <span class="icon">
+            <i class="fas fa-power-off"></i>
+          </span>
+          <span>zola</span>
+        </span>
+      </p>
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha384-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/galleria@1.6.1/dist/galleria.min.js" integrity="sha384-QSfwGT8/EU536DKdtyP2D6SLlh8zBaZ0cVkwfrwhqzIU9VCfJT00CLVP5t+HAiYg" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/galleria@1.6.1/dist/themes/folio/galleria.folio.min.js" integrity="sha384-DwpKI+deZB267+hPKwiOIc5Y2GKsVL0mR6hgz7GgIu7AgAMYqJwcJKY1YBNfhWcY" crossorigin="anonymous"></script>
+  
+  
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@8.13.5/dist/mermaid.min.js" integrity="sha384-0yWn54pSGtfKCU+skfA69l25VsCw+MZt4LQov3xNRoS7YkAMrFokGgSBnAWSK4pv" crossorigin="anonymous"></script>
+  
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.xkcd@1.1.13/dist/chart.xkcd.min.js" integrity="sha384-xC3h1+IHXK8seA+8KfT79Z4e0GPsznjXBoMa5nd8ooWKplPyXx92NOmljWxLC/cs" crossorigin="anonymous"></script>
+  
+  
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js" integrity="sha384-Pulw7+h73841BQIK0LzJCydKRPChJUF9w8h8W0o3h+cLtoyNPJS847bQauLWOTwg" crossorigin="anonymous"></script>
+  
+  <script src="https://jxuanli.github.io/elasticlunr.min.js"></script>
+  <script src="https://jxuanli.github.io/search_index.en.js"></script><script src="https://jxuanli.github.io/js/site.js"></script>
+
+  
+
+
+
+
+
+  
+  
+</body>
+
+</html>
