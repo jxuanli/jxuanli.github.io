@@ -9,7 +9,7 @@ tags:
   - kernel
   - linux
   - reverse engineering
-description: "Partial recovery of Linux kernel structure layouts for the page and SLUB allocators"
+description: "Recovering partial layouts of kernel structures associated with the SLUB and buddy allocators for kernel pwning"
 timezone: "America/Vancouver"
 ---
 
@@ -178,5 +178,5 @@ As shown above, the status of several configuration options needs to be determin
 
 ## Conclusion
 
-Implementing the ideas discussed in this post, I was able to debug the states of the page and SLUB allocators and solve `d3kheap2`. The implementation relied on a thorough analysis of the memory layout signature of relevant kernel object fields. See [#3114](https://github.com/pwndbg/pwndbg/pull/3114) for the full implementation.
+Implementing the ideas discussed in this post, I was able to debug the states of the page and SLUB allocators and solve `d3kheap2`. The implementation relied on a thorough analysis of the memory layout signature of relevant kernel object fields. See [#3116](https://github.com/pwndbg/pwndbg/pull/3116) for the full implementation.
 
