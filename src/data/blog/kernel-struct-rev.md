@@ -177,7 +177,6 @@ struct kmem_cache {
 #endif
     // ensure it has at least num_numa_nodes, sufficient for us
     struct kmem_cache_node *node[nnodes];
-}
 };
 ```
 
