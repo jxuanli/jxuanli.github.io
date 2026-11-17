@@ -1,5 +1,5 @@
 ---
-title: \[DEFCON CTF QUALS 2026\] gitvfs - author writeup
+title: "[DEFCON CTF QUALS 2026] gitvfs - author writeup"
 author: jxuanli
 pubDatetime: 2026-11-16T23:00:00.000+00:00
 slug: gitvfs-defcon-34-quals
@@ -61,8 +61,6 @@ The `init` file runs `gitvfs` with `flag1` as the environment variable and creat
 # in /init
 FLAG1=bbb{fake_flag1} /tmp/gitvfs
 echo bbb{fake_flag2} >/root/flag2
-```
-```
 ```
 
 # The vulnerabilities
@@ -463,7 +461,7 @@ flag2: bbb{fake_flag2}
 
 # after thought
 
-Firstly, I want to thank [@xion](https://x.com/0x10n) for helping me test this challenge. I also want to thank [@ath0](https://fastb.in/) and many others for helping me setting up the infrastructure for this challenge. Since this was a multi-part challenge, additional setup was required such that resources are not wasted as this challenge was resource intensive.
+Firstly, I want to thank [@xion](https://x.com/0x10n) for helping me test this challenge. I also want to thank [@ath0](https://fastb.in/) and many others for helping me setting up the infrastructure for this challenge. Since this was a multi-part challenge, additional setup was required such that resources were not wasted as this challenge was resource intensive.
 
 During local testing, I found that the *reliability of the exploit was dependant on battery level*. The unreliability mainly originated from that heap chunks sometimes get allocated from the *undesired* thread. However, with a bit of trials-and-errors, `> 50%` reliability can be achieved. I was essentially *fighting* against two thread heaps that I had no direct control over which took a lot of debugging.
 
