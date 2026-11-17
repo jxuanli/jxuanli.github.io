@@ -1,7 +1,7 @@
 ---
 title: "[DEFCON CTF QUALS 2026] gitvfs - author writeup"
 author: jxuanli
-pubDatetime: 2026-11-16T23:00:00.000+00:00
+pubDatetime: 2026-11-16T23:00:00.000+07:00
 slug: gitvfs-defcon-34-quals
 featured: false
 draft: false
@@ -14,7 +14,7 @@ timezone: "America/Vancouver"
 
 # Introduction
 
-Most kernel pwners are probably familiar with FUSE. FUSE stands for Filesystem in USErspace. It allows an user to register a filesystem and handle specific system calls in userland. It is one technique used to extend race windows when exploiting race conditions in kernelland. For the following example, `memcpy` assumes `vuln_object` is allocated. However, without locking, the same global variable can be accessed concurrently. Furthermore, if `user_buffer` is mapped to a file belonging to a FUSE filesystem, `copy_from_user()` invokes the registered read handler in userland and waits for the handler to finish. Invoking `sleep` in the handler results in an controllable and exploitable race window. For example, if the object is freed during this window, any following accesses with result in UAFs.
+Most kernel pwners are probably familiar with FUSE. FUSE stands for Filesystem in USErspace. It allows a user to register a filesystem and handle specific system calls in userland. It is one technique used to extend race windows when exploiting race conditions in kernelland. For the following example, `vuln_object->buffer_size` assumes `vuln_object` is allocated. However, without locking, the same global variable can be accessed concurrently. Furthermore, if `user_buffer` is mapped to a file belonging to a FUSE filesystem, `copy_from_user()` invokes the registered read handler in userland and waits for the handler to finish. Invoking `sleep` in the handler results in an controllable and exploitable race window. For example, if the object is freed during this window, any following accesses will result in UAFs.
 ```c
 // in vulnerable_kernel_module.c
 #define OBJ_SIZE 0x200
@@ -67,7 +67,7 @@ echo bbb{fake_flag2} >/root/flag2
 
 In the `gitvfs` binary, the filesystem is registered with the option, `max_threads=2`. This gives the first clue to the intended solution - it involves a **race condition**! This is further confirmed because the filesystem is initialized with `cfg->direct_io = 1` so that read and write operations are not coalesced. One vulnerable function is `free_node` because it frees the container structures (`node` and `node->file`) before entering a `for`-loop and freeing the file buffer. The `for`-loop \[1\] paired with md5 provides a window where `node` and `node->file` can be reallocated before \[2\] is reached, resulting in a dangling pointer.
 
-Astute readers might see its resemblance of the example discussed in the introduction.
+Astute readers might see its resemblance to the example discussed in the introduction.
 
 ```c
 void free_node(struct node *node) {
@@ -102,7 +102,7 @@ Two files, `A` and `barrier`, are created. `barrier` is used to prevent chunks f
 #define BUF_LEN 0x10000
 #define NAMELEN 0x500
 // ...
-inf main() {
+int main() {
   int fdA, fdC, barrier, err, fdV;
   char *buf, *payload;
   size_t start;
@@ -151,7 +151,7 @@ int main() {
 }
 ```
 
-The numbers used are tuned to consistently achieve the following sequence of events. Most importantly, **the thread in which `A` is allocated should be the same thread in which `C` is allocated**. We see the file buffer allocated at \[3\] is freed at \[4\]. The following log was written to `/log` when `DEBUG` mode was enabled (see the source code). (As it turns out, `/log` is also an important piece for obtaining `flag2`.)
+The numbers used are tuned to consistently achieve the following sequence of events. Most importantly, **the thread in which `A` is allocated should be the same thread in which `C` is allocated**. The file buffer allocated at \[3\] is freed at \[4\]. The following log was written to `/log` when `DEBUG` mode was enabled (see the source code). (As it turns out, `/log` is also an important piece for obtaining `flag2`.)
 ```
 [305.309] 7fc50b63e6c0 @ 0x7fc504001960: alloc (aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 [305.312] 7fc50b63e6c0 @ 0x7fc5040011c0: alloc (barrier)
@@ -265,7 +265,7 @@ int main() {
   fdC = chk(open(buf, O_RDWR | O_CREAT, 0666));
   for (int i = 0; i < 2; i++) {
     // a light heap spray -
-    // one of them will achieve the reclaimation and overwrite
+    // one of them will achieve the reclamation and overwrite
     chk(lseek(fdC, NAMELEN, SEEK_SET));
     chk(write(fdC, payload, NAMELEN)); // [7]
   }
@@ -286,7 +286,7 @@ int main() {
 `flag2` is located at `/root/flag2` and owned by `root`. `ps -e` shows that the `gitvfs` process is also owned by `root`. Therefore, one approach is to **run arbitrary commands as root through this process**.
 
 
-Through the full control over a freed `node` struct (specifically the `record` chain), a arbitrary free primitive of an arbitrary amount (though two is enough) of pointers can be constructed. The `payload` in the above code snippet constructs the following layout on the heap.
+Through the full control over a freed `node` struct (specifically the `record` chain), an arbitrary free primitive of an arbitrary amount (though two is enough) of pointers can be constructed. The `payload` in the above code snippet constructs the following layout on the heap.
 
 ```
   [ (fake) node struct of V sized 0x410
@@ -357,7 +357,7 @@ Since the content of the memory pointed to by `rdi` is controlled by the attacke
   47bd5f:	e8 bc fc ff ff       	call   47ba20 <__execve>
 ```
 
-The following steps should be straight forward. First, a malicious command is written to `/log`. Then, `/mount/gitvfs/log` is created and written to in a `for`-loop to allocate out an `IFUNC` memory region, overwriting the function pointer located at `IFUNC` to be `TARGET_IP` and redirecting the control flow to `TARGET_IP`. Upon reaching the gadget, the `gitvfs` process runs `/log` as root and panics due to invalid program state.
+The following steps should be straightforward. First, a malicious command is written to `/log`. Then, `/mount/gitvfs/log` is created and written to in a `for`-loop to allocate out an `IFUNC` memory region, overwriting the function pointer located at `IFUNC` with `TARGET_IP` and redirecting the control flow to `TARGET_IP`. Upon reaching the gadget, the `gitvfs` process runs `/log` as root and panics due to invalid program state.
 
 ```c
 int main() {
@@ -381,7 +381,7 @@ int main() {
 }
 ```
 
-Among the many useful commands, the one used in my exploit is `cat /root/flag2 > /tmp/flag2` since the goal is file read. Afterwards, a `for`-loop is used to wait for command completion. There are plenty of ways to drop to a root shell but this is left as an exercise to the reader. (Simply dropping to a shell in the `/log` file does not work. Why?)
+Among the many useful commands, the one used in my exploit is `cat /root/flag2 > /tmp/flag2` since the goal is file read. Afterwards, a `for`-loop is used to wait for command completion. There are plenty of ways to drop to a root shell but this is left as an exercise for the reader. (Simply dropping to a shell in the `/log` file does not work. Why?)
 
 ```c
 int main() {
@@ -461,11 +461,11 @@ flag2: bbb{fake_flag2}
 
 # after thought
 
-Firstly, I want to thank [@xion](https://x.com/0x10n) for helping me test this challenge. I also want to thank [@ath0](https://fastb.in/) and many others for helping me setting up the infrastructure for this challenge. Since this was a multi-part challenge, additional setup was required such that resources were not wasted as this challenge was resource intensive.
+Firstly, I want to thank [@xion](https://x.com/0x10n) for helping me test this challenge. I also want to thank [@ath0](https://fastb.in/) and many others for helping me set up the infrastructure for this challenge. Since this was a multi-part challenge, additional setup was required such that resources were not wasted as this challenge was resource intensive.
 
-During local testing, I found that the *reliability of the exploit was dependant on battery level*. The unreliability mainly originated from that heap chunks sometimes get allocated from the *undesired* thread. However, with a bit of trials-and-errors, `> 50%` reliability can be achieved. I was essentially *fighting* against two thread heaps that I had no direct control over which took a lot of debugging.
+During local testing, I found that the *reliability of the exploit was dependent on battery level*. The unreliability mainly originated from that heap chunks sometimes get allocated from the *undesired* thread. However, with a bit of experiments, `> 50%` reliability can be achieved. I was essentially *fighting* against two thread heaps that I had no direct control over which took a lot of debugging.
 
-Overall, I'm proud of this challenge. It was my inaugural challenge but proved to be up to DEFCON's standards. But, there were also many things that could have been improved. For example, I will try to provide the server side setup next time (could not this time concerns that it may result in unintended solves, though some unintended solves still existed since the QEMU used had an n-day and a 0day). I will also have a Docker file used for compiling the target binary if any. In addition, I would (in retrospect) probably be fine with adding pinning CPUs in `gitvfs` so that exploits can be more reliable. However, the challenge was closer to a real world scenario without it.
+Overall, I'm proud of this challenge. It was my inaugural challenge but proved to be up to DEFCON's standards. But, there were also many things that could have been improved. For example, I will try to provide the server side setup next time (could not this time due to concerns that it may result in unintended solves, though some unintended solves still existed since the QEMU used had an n-day and a 0day). I will also have a Docker file used for compiling the target binary if any. In addition, I would (in retrospect) probably be fine with adding pinning CPUs in `gitvfs` so that exploits can be more reliable. However, the challenge was closer to a real world scenario without it.
 
 Lastly, I want to congratulate the players who made a reasonable attempt on this challenge and learnt something new (regardless if you solved it or not). It was by no means easy (though there were still more solves than I anticipated).
 
